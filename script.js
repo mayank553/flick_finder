@@ -6,13 +6,16 @@ let card = document.querySelector('.card');
 function getMovieData(moviename){
     return fetch(`https://www.omdbapi.com/?t=${moviename}&apikey=96bed65a`)
     .then(raw => {
-        if(!raw.Response){
+        if(raw.Response === "False"){
             throw new Error('Movie not found or incorrect spelling')
         }else{
             return raw.json()
         }
     })
 }
+
+
+
 
 function displayMovieData(details){
     console.log(details)
@@ -53,6 +56,7 @@ searchBtn.addEventListener('click', function(){
     })
    }else{
         alert('Please enter a movie name')
+        
     }
    }
        
