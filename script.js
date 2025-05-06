@@ -6,7 +6,7 @@ let card = document.querySelector('.card');
 function getMovieData(moviename){
     return fetch(`https://www.omdbapi.com/?t=${moviename}&apikey=96bed65a`)
     .then(raw => {
-        if(raw.response === 'False'){
+        if(raw.Response === 'False'){
             throw new Error('Movie not found')
         }else{
             return raw.json()
