@@ -1,25 +1,16 @@
-let searchBtn = document.querySelector('.search');
-let movieInp = document.querySelector('.movieInp');
-let card = document.querySelector('.card');
+let searchBtn = document.querySelector(".search");
+let movieInp = document.querySelector(".movieInp");
+let card = document.querySelector(".card");
 
-
-function getMovieData(moviename){
-    return fetch(`https://www.omdbapi.com/?t=${moviename}&apikey=96bed65a`)
-    .then(raw => {
-        if(raw.Response === "False"){
-            throw new Error('Movie not found or incorrect spelling')
-        }else{
-            return raw.json()
-        }
-    })
+function getMovieData(moviename) {
+  return fetch(`https://www.omdbapi.com/?t=${moviename}&apikey=96bed65a`).then(
+    (res) => res.json()
+  );
 }
 
-
-
-
-function displayMovieData(details){
-    console.log(details)
-    let data = `   
+function displayMovieData(details) {
+  console.log(details);
+  let data = `   
         <img
           id="posterImg"
           src="${details.Poster}"
@@ -38,26 +29,21 @@ function displayMovieData(details){
           </p>
         </div>
       </div>
-    </div>`
-    card.innerHTML = data
- 
+    </div>`;
+  card.innerHTML = data;
 }
 
-
-// getMovieData('Mirzapur').then( function (data) {
-//     console.log(data)
-// })
-
-searchBtn.addEventListener('click', function(){
-   let moviename = movieInp.value.trim()
-   if(moviename.length > 0){
-    getMovieData(moviename).then(function(data){
-        displayMovieData(data)
-    })
-   }else{
-        alert('Please enter a movie name')
-        
-    }
-   }
-       
-)
+searchBtn.addEventListener("click", function () {
+  let moviename = movieInp.value.trim();
+  if (moviename.length > 0) {
+    getMovieData(moviename).then(function (data) {
+      if (data.Response === "False") {
+        alert("Movie not found or incorrect spelling");
+      } else {
+        displayMovieData(data);
+      }
+    });
+  } else {
+    alert("Please enter a movie name");
+  }
+});
